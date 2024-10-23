@@ -11,56 +11,38 @@ The valid substrings are:
 "abac" (character 'a' appears 2 times).
 "abacb" (character 'a' appears 2 times).
 "bacb" (character 'b' appears 2 times).
-
+      
 Example 2:
 Input: s = "abcde", k = 1
-
 Output: 15
 """
 
 
-def f(s, k):
-    """
-    :type s: str
-    :type k: int
-    :rtype: int
-    """
-    substring_list = []
-    for substring_len in range(len(s)):
-        i = 0
-        while i <= len(s)-substring_len-1:
-            substring_list.append(s[i : i+substring_len+1])
-            i += 1
-    if k == 1:
-        return len(substring_list)
-    else:
+from collections import Counter
+
+def numberOfSubstrings(s: str, k: int) -> int:
+    n = len(s)
+    res = (n + 1) * n // 2
+    count = Counter()
+    i = 0
     
-        letter_list = set(s)
-        c=0
-        for a_letter in letter_list:
-            for substring in substring_list[:]:
-                count = sum([letter == a_letter for letter in list(substring)])
-                if count >= k:
-                    c += 1
-                    try:  
-                        substring_list.remove(substring)
-                    except:
-                        pass
+    for j in range(n):
+        # print(count(s[j]))
+        count[s[j]] += 1
         
-        return c
-
-
-f('abacb', 2)
-
-
-
-
-
+        while count[s[j]] >= k:
+            count[s[i]] -= 1
+            i += 1
+        res -= j - i + 1
+    return res
 
 
 
 #%% Q1
+# https://leetcode.com/problems/count-substrings-with-k-frequency-characters-i/description/
+
 import string
+
 """
 Example 1:
 Input: target = "abc"
