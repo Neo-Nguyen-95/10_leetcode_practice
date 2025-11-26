@@ -29,6 +29,7 @@ word2:    p   q
 merged: a p b q c   d
 """
 
+#%% My solution
 word1 = 'abcdef'
 word2 = 'pqr'
 
@@ -48,3 +49,21 @@ for i in range(len_max):
         pass
         
 print(merged_word)
+
+
+#%% Better solution
+word1 = 'abcdef'
+word2 = 'pqr'
+
+merged_word = []
+
+for w1, w2 in zip(word1, word2):
+    merged_word.append(w1 + w2)
+    
+merged_word.append(word1[len(word2):])
+merged_word.append(word2[len(word1):])
+
+result = ''.join(merged_word)
+
+print(result)
+
